@@ -13,14 +13,17 @@ import {
   MatCardModule,
   MatToolbarModule,
   MatSidenavModule,
-  MatListModule
+  MatListModule, MatTabsModule
 } from '@angular/material';
 import {LayoutModule} from '@angular/cdk/layout';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: 'not-found', component: PageNotFoundComponent},
+  {path: '**', redirectTo: '/not-found'}
 ];
 
 @NgModule({
@@ -28,6 +31,7 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     HomeComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +44,8 @@ const appRoutes: Routes = [
     LayoutModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

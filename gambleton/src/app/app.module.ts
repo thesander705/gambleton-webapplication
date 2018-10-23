@@ -17,6 +17,7 @@ import {
 } from '@angular/material';
 import {LayoutModule} from '@angular/cdk/layout';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {CookieService} from 'ngx-cookie-service';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -47,7 +48,7 @@ const appRoutes: Routes = [
     MatListModule,
     MatTabsModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

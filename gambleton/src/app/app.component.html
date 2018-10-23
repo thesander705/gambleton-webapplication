@@ -1,20 +1,25 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <div class="nav-left">
-        <a routerLink="">Gambleton</a>
-      </div>
-      <span class="spacer"></span>
-      <div class="nav-right">
-        <ul>
-          <li><a routerLink="">Home</a></li>
-          <li><a routerLink="login">Login</a></li>
-        </ul>
-      </div>
-    </mat-toolbar>
+    <nav>
+      <mat-toolbar color="primary">
+        <div class="nav-left">
+          <a routerLink="">Gambleton</a>
+        </div>
+        <span class="spacer"></span>
+        <div class="nav-right">
+          <ul>
+            <li><a routerLink="">Home</a></li>
+            <li><a routerLink="login">Login</a></li>
+          </ul>
+        </div>
+      </mat-toolbar>
+    </nav>
     <div class="content">
       <router-outlet></router-outlet>
     </div>
+    <footer>
+      &copy; Gambleton 2018
+    </footer>
   </mat-sidenav-content>
 </mat-sidenav-container>
 

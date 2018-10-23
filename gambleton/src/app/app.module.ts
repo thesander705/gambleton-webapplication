@@ -19,11 +19,12 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {CookieService} from 'ngx-cookie-service';
 import {UserService} from './services/UserService';
+import {AuthGuardService} from './services/AuthGuardService';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
+  {path: 'login' , component: LoginComponent},
   {path: 'not-found', component: PageNotFoundComponent},
   {path: '**', redirectTo: '/not-found'}
 ];
@@ -49,7 +50,7 @@ const appRoutes: Routes = [
     MatListModule,
     MatTabsModule
   ],
-  providers: [CookieService, UserService],
+  providers: [CookieService, UserService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -17,6 +17,16 @@ export class UserService {
     return this._loggedInUser;
   }
 
+  public IsAuthenticated(): Promise<boolean> {
+    const promise: Promise<boolean> = new Promise((resolve, reject) => {
+      if (this.loggedInUser != null) {
+        resolve(true);
+      }
+      resolve(false);
+    });
+    return promise;
+  }
+
   public Login(username: string, password: string) {
     const user = this.GetUserByCredentials(username, password);
     if (user == null) {

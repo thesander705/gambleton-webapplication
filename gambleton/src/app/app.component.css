@@ -1,0 +1,25 @@
+.sidenav-container a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.content {
+  padding: 0 16px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.nav-right ul {
+  list-style-type: none;
+}
+
+.nav-right ul li {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+.content{
+  min-height: calc(100vh - 96px);
+}

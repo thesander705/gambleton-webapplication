@@ -5,9 +5,13 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input [(ngModel)]="password" required="required" type="password" ngModel matInput placeholder="Password" name="password">
+      <input [(ngModel)]="password" required="required" type="password" ngModel matInput placeholder="Password"
+             name="password">
     </mat-form-field>
   </div>
-  <button [disabled]="!form.valid" mat-stroked-button type="submit">Submit</button>
+  <div class="mat-error">
+    {{errorMessage}}
+  </div>
+  <button [disabled]="!form.valid" mat-stroked-button type="submit">Login</button>
 
 </form>

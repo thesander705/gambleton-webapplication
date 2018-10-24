@@ -13,18 +13,22 @@ import {
   MatCardModule,
   MatToolbarModule,
   MatSidenavModule,
-  MatListModule, MatTabsModule
+  MatListModule, MatTabsModule,
+  MatFormFieldModule, MatOptionModule, MatSelectModule, MatInputModule, MatProgressSpinnerModule
 } from '@angular/material';
 import {LayoutModule} from '@angular/cdk/layout';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {CookieService} from 'ngx-cookie-service';
 import {UserService} from './services/UserService';
 import {AuthGuardService} from './services/AuthGuardService';
+import {FormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
-  {path: 'login' , component: LoginComponent},
+  {path: 'login', component: LoginComponent},
   {path: 'not-found', component: PageNotFoundComponent},
   {path: '**', redirectTo: '/not-found'}
 ];
@@ -40,6 +44,7 @@ const appRoutes: Routes = [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
+    FormsModule,
     MatMenuModule,
     MatIconModule,
     MatCardModule,
@@ -48,7 +53,13 @@ const appRoutes: Routes = [
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatTabsModule
+    MatTabsModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    HttpClientModule
   ],
   providers: [CookieService, UserService, AuthGuardService],
   bootstrap: [AppComponent]

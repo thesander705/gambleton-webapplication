@@ -9,7 +9,8 @@
         <div class="nav-right">
           <ul>
             <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
-            <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+            <li *ngIf="userService.loggedInUser == null"><a routerLink="/login" routerLinkActive="active">Login</a></li>
+            <li *ngIf="userService.loggedInUser != null"><a routerLink="/account" routerLinkActive="active">{{userService.loggedInUser.username}}</a></li>
           </ul>
         </div>
       </mat-toolbar>

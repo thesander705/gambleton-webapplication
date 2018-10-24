@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../services/UserService';
 import {Form} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,15 @@ import {Form} from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   private userService: UserService;
+  private router: Router;
   @ViewChild('formElement') form: Form;
   username: string;
   password: string;
+  errorMessage: string;
 
-  constructor(userService: UserService) {
+  constructor(userService: UserService, router: Router) {
     this.userService = userService;
+    this.router = router;
   }
 
   ngOnInit() {
@@ -28,9 +32,10 @@ export class LoginComponent implements OnInit {
   login(username: string, password: string) {
     this.userService.Login(username, password).subscribe((loginSuccess: Boolean) => {
       if (loginSuccess) {
-        alert('Success');
+        this.errorMessage = '';
+        this.router.navigate(['/account']);
       } else {
-        alert('Nay');
+        this.errorMessage = 'Wrong username or password';
       }
     });
   }

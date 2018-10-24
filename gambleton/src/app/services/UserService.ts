@@ -2,16 +2,20 @@ import {User} from '../models/User';
 import {Role} from '../models/Role';
 import {Injectable} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {observable, Observable, Observer} from 'rxjs';
+import {Observable, Observer} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable()
 export class UserService {
 
   private cookieService: CookieService;
+  private http: HttpClient;
   private _loggedInUser: User;
 
-  constructor(cookieService: CookieService) {
+
+  constructor(cookieService: CookieService, http: HttpClient) {
     this.cookieService = cookieService;
+    this.http = http;
   }
 
   get loggedInUser(): User {
@@ -72,37 +76,56 @@ export class UserService {
 
   public GetUserByCredentials(username: string, password: string): Observable<User> {
     const observableUser: Observable<User> = Observable.create((observer: Observer<User>) => {
-      if (username === 'test' && password === 'Test123!') {
-        const user = new User();
-        user.id = 1;
-        user.password = 'Test123!';
-        user.role = Role.Gambler;
-        user.username = 'test';
-        user.authToken = 'sxrdcfgvhbjnkmljhbsad213hjb';
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        })
+      };
 
-        observer.next(user);
-      } else {
-        observer.error('User not found');
-      }
+      this.http.post('http://localhost:8080/userByCredentials', {
+        username: username,
+        password: password
+      }, httpOptions)
+        .subscribe(data => {
+            const user: User = new User();
+            user.username = data['username'];
+            user.password = data['password'];
+            user.id = data['id'];
+            user.role = data['role'];
+            user.authToken = unescape(data['authToken']);
+            observer.next(user);
+          },
+          error => {
+            observer.error('User not found');
+          });
     });
 
     return observableUser;
   }
 
-  public GetUserByAuthenticationToken(uauthToken: string): Observable<User> {
+  public GetUserByAuthenticationToken(authToken: string): Observable<User> {
     const observableUser: Observable<User> = Observable.create((observer: Observer<User>) => {
-      if (uauthToken === 'sxrdcfgvhbjnkmljhbsad213hjb') {
-        const user = new User();
-        user.id = 1;
-        user.password = 'Test123!';
-        user.role = Role.Gambler;
-        user.username = 'test';
-        user.authToken = 'sxrdcfgvhbjnkmljhbsad213hjb';
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        })
+      };
 
-        observer.next(user);
-      } else {
-        observer.error('User not found');
-      }
+      this.http.post('http://localhost:8080/userByAuthToken', {
+        authToken: authToken
+      }, httpOptions)
+        .subscribe(data => {
+            const user: User = new User();
+            user.username = data['username'];
+            user.password = data['password'];
+            user.id = data['id'];
+            user.role = data['role'];
+            user.authToken = unescape(data['authToken']);
+            observer.next(user);
+          },
+          error => {
+            observer.error('User not found');
+          });
     });
 
     return observableUser;

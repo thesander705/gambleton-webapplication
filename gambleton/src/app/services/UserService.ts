@@ -2,6 +2,7 @@ import {User} from '../models/User';
 import {Role} from '../models/Role';
 import {Injectable} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
+import {Observable, Observer} from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -28,51 +29,56 @@ export class UserService {
   }
 
   public Login(username: string, password: string) {
-    const user = this.GetUserByCredentials(username, password);
-    if (user == null) {
-      return;
-    }
+    const userObservable = this.GetUserByCredentials(username, password);
 
-    this._loggedInUser = user;
-    this.cookieService.set('AuthToken', user.authToken);
+    userObservable.subscribe((user: User) => {
+      this._loggedInUser = user;
+      this.cookieService.set('AuthToken', user.authToken);
+    });
   }
 
   public LoginByAuthenticationToken(authToken: string) {
-    const user = this.GetUserByAuthenticationToken(authToken);
+    const userObservable = this.GetUserByAuthenticationToken(authToken);
 
-    if (user == null) {
-      return;
-    }
-
-    this._loggedInUser = user;
-    this.cookieService.set('AuthToken', user.authToken);
+    userObservable.subscribe((user: User) => {
+      this._loggedInUser = user;
+      this.cookieService.set('AuthToken', user.authToken);
+    });
   }
 
-  public GetUserByCredentials(username: string, password: string): User {
-    if (username === 'test' && password === 'Test123!') {
-      const user = new User();
-      user.id = 1;
-      user.password = 'Test123!';
-      user.role = Role.Gambler;
-      user.username = 'test';
-      user.authToken = 'sxrdcfgvhbjnkmljhbsad213hjb';
+  public GetUserByCredentials(username: string, password: string): Observable<User> {
+    const observableUser: Observable<User> = Observable.create((observer: Observer<User>) => {
+      if (username === 'test' && password === 'Test123!') {
+        const user = new User();
+        user.id = 1;
+        user.password = 'Test123!';
+        user.role = Role.Gambler;
+        user.username = 'test';
+        user.authToken = 'sxrdcfgvhbjnkmljhbsad213hjb';
 
-      return user;
-    }
-    return null;
+        observer.next(user);
+      }
+      observer.error('User not found');
+    });
+
+    return observableUser;
   }
 
-  public GetUserByAuthenticationToken(uauthToken: string): User {
-    if (uauthToken === 'sxrdcfgvhbjnkmljhbsad213hjb') {
-      const user = new User();
-      user.id = 1;
-      user.password = 'Test123!';
-      user.role = Role.Gambler;
-      user.username = 'test';
-      user.authToken = 'sxrdcfgvhbjnkmljhbsad213hjb';
+  public GetUserByAuthenticationToken(uauthToken: string): Observable<User> {
+    const observableUser: Observable<User> = Observable.create((observer: Observer<User>) => {
+      if (uauthToken === 'sxrdcfgvhbjnkmljhbsad213hjb') {
+        const user = new User();
+        user.id = 1;
+        user.password = 'Test123!';
+        user.role = Role.Gambler;
+        user.username = 'test';
+        user.authToken = 'sxrdcfgvhbjnkmljhbsad213hjb';
 
-      return user;
-    }
-    return null;
+        observer.next(user);
+      }
+      observer.error('User not found');
+    });
+
+    return observableUser;
   }
 }

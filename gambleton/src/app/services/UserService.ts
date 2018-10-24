@@ -18,6 +18,16 @@ export class UserService {
     return this._loggedInUser;
   }
 
+  public restoreLoggedInUser(): Observable<boolean> {
+    const restoreObservable: Observable<boolean> = new Observable<boolean>((observer: Observer<boolean>) => {
+      const authToken: string = this.cookieService.get('AuthToken');
+      this.LoginByAuthenticationToken(authToken).subscribe((bool: boolean) => {
+        observer.next(bool);
+      });
+    });
+    return restoreObservable;
+  }
+
   public IsAuthenticated(): Promise<boolean> {
     const promise: Promise<boolean> = new Promise((resolve, reject) => {
       if (this.loggedInUser != null) {

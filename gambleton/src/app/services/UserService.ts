@@ -1,5 +1,4 @@
 import {User} from '../models/User';
-import {Role} from '../models/Role';
 import {Injectable} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable, Observer} from 'rxjs';
@@ -25,6 +24,10 @@ export class UserService {
   public restoreLoggedInUser(): Observable<boolean> {
     const restoreObservable: Observable<boolean> = new Observable<boolean>((observer: Observer<boolean>) => {
       const authToken: string = this.cookieService.get('AuthToken');
+      if (authToken == null || authToken === undefined || authToken === '') {
+        observer.next(false);
+        return;
+      }
       this.LoginByAuthenticationToken(authToken).subscribe((bool: boolean) => {
         observer.next(bool);
       });
@@ -92,7 +95,7 @@ export class UserService {
             user.password = data['password'];
             user.id = data['id'];
             user.role = data['role'];
-            user.authToken = unescape(data['authToken']);
+            user.authToken = data['authToken'];
             observer.next(user);
           },
           error => {
@@ -120,10 +123,10 @@ export class UserService {
             user.password = data['password'];
             user.id = data['id'];
             user.role = data['role'];
-            user.authToken = unescape(data['authToken']);
+            user.authToken = data['authToken'];
             observer.next(user);
           },
-          error => {
+          () => {
             observer.error('User not found');
           });
     });

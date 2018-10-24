@@ -27,7 +27,3 @@ footer {
   display: inline-block;
   margin-left: 15px;
 }
-
-.content {
-  min-height: calc(100vh - 147px);
-}

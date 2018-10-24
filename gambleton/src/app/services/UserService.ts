@@ -2,7 +2,7 @@ import {User} from '../models/User';
 import {Role} from '../models/Role';
 import {Injectable} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {Observable, Observer} from 'rxjs';
+import {observable, Observable, Observer} from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -28,22 +28,36 @@ export class UserService {
     return promise;
   }
 
-  public Login(username: string, password: string) {
-    const userObservable = this.GetUserByCredentials(username, password);
+  public Login(username: string, password: string): Observable<Boolean> {
+    const loginObservable = new Observable<boolean>((observer: Observer<boolean>) => {
+      const userObservable = this.GetUserByCredentials(username, password);
 
-    userObservable.subscribe((user: User) => {
-      this._loggedInUser = user;
-      this.cookieService.set('AuthToken', user.authToken);
+      userObservable.subscribe((user: User) => {
+        this._loggedInUser = user;
+        this.cookieService.set('AuthToken', user.authToken);
+        observer.next(true);
+      }, () => {
+        observer.next(false);
+      });
     });
+
+    return loginObservable;
   }
 
-  public LoginByAuthenticationToken(authToken: string) {
-    const userObservable = this.GetUserByAuthenticationToken(authToken);
+  public LoginByAuthenticationToken(authToken: string): Observable<boolean> {
+    const loginObservable = new Observable<boolean>((observer: Observer<boolean>) => {
+      const userObservable = this.GetUserByAuthenticationToken(authToken);
 
-    userObservable.subscribe((user: User) => {
-      this._loggedInUser = user;
-      this.cookieService.set('AuthToken', user.authToken);
+      userObservable.subscribe((user: User) => {
+        this._loggedInUser = user;
+        this.cookieService.set('AuthToken', user.authToken);
+        observer.next(true);
+      }, function () {
+        observer.next(false);
+      });
     });
+
+    return loginObservable;
   }
 
   public GetUserByCredentials(username: string, password: string): Observable<User> {
@@ -57,8 +71,9 @@ export class UserService {
         user.authToken = 'sxrdcfgvhbjnkmljhbsad213hjb';
 
         observer.next(user);
+      } else {
+        observer.error('User not found');
       }
-      observer.error('User not found');
     });
 
     return observableUser;
@@ -75,8 +90,9 @@ export class UserService {
         user.authToken = 'sxrdcfgvhbjnkmljhbsad213hjb';
 
         observer.next(user);
+      } else {
+        observer.error('User not found');
       }
-      observer.error('User not found');
     });
 
     return observableUser;

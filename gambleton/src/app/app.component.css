@@ -1,3 +1,7 @@
+.sidenav-container a:hover, .sidenav-container .active {
+  color: #303030;
+}
+
 .sidenav-container a {
   color: #FFFFFF;
   text-decoration: none;
@@ -6,9 +10,11 @@
 .content {
   padding: 0 16px;
 }
-footer{
+
+footer {
   padding: 16px;
 }
+
 .spacer {
   flex: 1 1 auto;
 }
@@ -20,8 +26,4 @@ footer{
 .nav-right ul li {
   display: inline-block;
   margin-left: 15px;
-}
-
-.content {
-  min-height: calc(100vh - 147px);
 }

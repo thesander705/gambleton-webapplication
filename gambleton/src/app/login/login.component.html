@@ -1,3 +1,17 @@
-<p>
-  login works!
-</p>
+<form #formElement="ngForm" (submit)="onSubmit()" #form="ngForm">
+  <div class="example-container">
+    <mat-form-field>
+      <input [(ngModel)]="username" required="required" ngModel matInput placeholder="Username" name="username">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input [(ngModel)]="password" required="required" type="password" ngModel matInput placeholder="Password"
+             name="password">
+    </mat-form-field>
+  </div>
+  <div class="mat-error">
+    {{errorMessage}}
+  </div>
+  <button [disabled]="!form.valid" mat-stroked-button type="submit">Login</button>
+
+</form>

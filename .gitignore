@@ -23,3 +23,5 @@
 hs_err_pid*
 
 \.idea/
+
+gambleton/package-lock\.json

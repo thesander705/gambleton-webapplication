@@ -20,14 +20,30 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {CookieService} from 'ngx-cookie-service';
 import {UserService} from './services/UserService';
-import {AuthGuardService} from './services/AuthGuardService';
+import {AuthGuardService} from './services/Guards/AuthGuardService';
 import {FormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
+import {GamesComponent} from './games/games.component';
+import {CreateGameComponent} from './games/create-game/create-game.component';
+import {GamesOverviewComponent} from './games/games-overview/games-overview.component';
+import {AdminGuardService} from './services/Guards/AdminGuardService';
+import {GameService} from './services/GameService';
 
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
+  {
+    path: 'games', component: GamesComponent,
+    children: [
+      {
+        path: '', component: GamesOverviewComponent
+      },
+      {
+        path: 'add', component: CreateGameComponent, canActivate: [AdminGuardService]
+      }
+    ]
+  },
   {path: 'login', component: LoginComponent},
   {path: 'not-found', component: PageNotFoundComponent},
   {path: '**', redirectTo: '/not-found'}
@@ -39,6 +55,9 @@ const appRoutes: Routes = [
     LoginComponent,
     HomeComponent,
     PageNotFoundComponent,
+    GamesComponent,
+    CreateGameComponent,
+    GamesOverviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +80,7 @@ const appRoutes: Routes = [
     MatProgressSpinnerModule,
     HttpClientModule
   ],
-  providers: [CookieService, UserService, AuthGuardService],
+  providers: [CookieService, UserService, AuthGuardService, AdminGuardService, GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

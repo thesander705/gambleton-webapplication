@@ -1,4 +1,4 @@
 export enum Role {
-  Gambler,
-  Administrator
+  Gambler = <any> 'Gambler',
+  Administrator = <any> 'Administrator'
 }

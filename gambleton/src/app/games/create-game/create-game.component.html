@@ -1,0 +1,17 @@
+<form #formElement="ngForm" (submit)="onSubmit()" #form="ngForm">
+  <div class="example-container">
+    <mat-form-field>
+      <input [(ngModel)]="name" ngModel matInput placeholder="Name" name="name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input [(ngModel)]="description" ngModel matInput placeholder="Description"
+             name="description">
+    </mat-form-field>
+  </div>
+  <div class="mat-error">
+    {{errorMessage}}
+  </div>
+  <button [disabled]="!form.valid" mat-stroked-button type="submit">Create game!</button>
+
+</form>

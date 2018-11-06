@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const userServiceLoc = this.userService;
     this.userService.restoreLoggedInUser().subscribe();
   }
 }

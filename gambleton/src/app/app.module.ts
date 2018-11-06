@@ -23,6 +23,7 @@ import {UserService} from './services/UserService';
 import {AuthGuardService} from './services/AuthGuardService';
 import {FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { GamesComponent } from './games/games.component';
 
 
 const appRoutes: Routes = [
@@ -39,6 +40,7 @@ const appRoutes: Routes = [
     LoginComponent,
     HomeComponent,
     PageNotFoundComponent,
+    GamesComponent,
   ],
   imports: [
     BrowserModule,

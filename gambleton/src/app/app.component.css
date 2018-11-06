@@ -27,3 +27,7 @@ footer {
   display: inline-block;
   margin-left: 15px;
 }
+
+.nav-right a{
+  text-transform: capitalize;
+}

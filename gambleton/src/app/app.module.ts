@@ -29,6 +29,7 @@ import { GamesComponent } from './games/games.component';
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'games', component: GamesComponent},
   {path: 'login', component: LoginComponent},
   {path: 'not-found', component: PageNotFoundComponent},
   {path: '**', redirectTo: '/not-found'}

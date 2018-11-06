@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {UserService} from '../../services/UserService';
 
 @Component({
   selector: 'app-games-overview',
@@ -6,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./games-overview.component.css']
 })
 export class GamesOverviewComponent implements OnInit {
+  userService: UserService;
 
-  constructor() { }
+  constructor(userService: UserService) {
+    this.userService = userService;
+  }
 
   ngOnInit() {
   }

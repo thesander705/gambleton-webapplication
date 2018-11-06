@@ -24,6 +24,7 @@ import {AuthGuardService} from './services/AuthGuardService';
 import {FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { GamesComponent } from './games/games.component';
+import { CreateGameComponent } from './games/create-game/create-game.component';
 
 
 const appRoutes: Routes = [
@@ -42,6 +43,7 @@ const appRoutes: Routes = [
     HomeComponent,
     PageNotFoundComponent,
     GamesComponent,
+    CreateGameComponent,
   ],
   imports: [
     BrowserModule,

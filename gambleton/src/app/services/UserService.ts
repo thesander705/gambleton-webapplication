@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Observable, Observer} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Role} from '../models/Role';
 
 @Injectable()
 export class UserService {
@@ -33,6 +34,14 @@ export class UserService {
       });
     });
     return restoreObservable;
+  }
+
+  public IsAdmin(): boolean {
+    if (!this.loggedInUser) {
+      return false;
+    }
+
+    return this.loggedInUser.role === Role.Administrator;
   }
 
   public IsAuthenticated(): Promise<boolean> {

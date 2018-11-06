@@ -20,12 +20,13 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {CookieService} from 'ngx-cookie-service';
 import {UserService} from './services/UserService';
-import {AuthGuardService} from './services/AuthGuardService';
+import {AuthGuardService} from './services/Guards/AuthGuardService';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {GamesComponent} from './games/games.component';
 import {CreateGameComponent} from './games/create-game/create-game.component';
-import { GamesOverviewComponent } from './games/games-overview/games-overview.component';
+import {GamesOverviewComponent} from './games/games-overview/games-overview.component';
+import {AdminGuardService} from './services/Guards/AdminGuardService';
 
 
 const appRoutes: Routes = [
@@ -38,7 +39,7 @@ const appRoutes: Routes = [
         path: '', component: GamesOverviewComponent
       },
       {
-        path: 'add', component: CreateGameComponent
+        path: 'add', component: CreateGameComponent, canActivate: [AdminGuardService]
       }
     ]
   },
@@ -78,7 +79,7 @@ const appRoutes: Routes = [
     MatProgressSpinnerModule,
     HttpClientModule
   ],
-  providers: [CookieService, UserService, AuthGuardService],
+  providers: [CookieService, UserService, AuthGuardService, AdminGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

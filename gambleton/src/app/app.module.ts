@@ -22,15 +22,26 @@ import {CookieService} from 'ngx-cookie-service';
 import {UserService} from './services/UserService';
 import {AuthGuardService} from './services/AuthGuardService';
 import {FormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { GamesComponent } from './games/games.component';
-import { CreateGameComponent } from './games/create-game/create-game.component';
+import {HttpClientModule} from '@angular/common/http';
+import {GamesComponent} from './games/games.component';
+import {CreateGameComponent} from './games/create-game/create-game.component';
+import { GamesOverviewComponent } from './games/games-overview/games-overview.component';
 
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
-  {path: 'games', component: GamesComponent},
+  {
+    path: 'games', component: GamesComponent,
+    children: [
+      {
+        path: '', component: GamesOverviewComponent
+      },
+      {
+        path: 'add', component: CreateGameComponent
+      }
+    ]
+  },
   {path: 'login', component: LoginComponent},
   {path: 'not-found', component: PageNotFoundComponent},
   {path: '**', redirectTo: '/not-found'}
@@ -44,6 +55,7 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     GamesComponent,
     CreateGameComponent,
+    GamesOverviewComponent,
   ],
   imports: [
     BrowserModule,

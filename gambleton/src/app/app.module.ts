@@ -27,6 +27,7 @@ import {GamesComponent} from './games/games.component';
 import {CreateGameComponent} from './games/create-game/create-game.component';
 import {GamesOverviewComponent} from './games/games-overview/games-overview.component';
 import {AdminGuardService} from './services/Guards/AdminGuardService';
+import {GameService} from './services/GameService';
 
 
 const appRoutes: Routes = [
@@ -79,7 +80,7 @@ const appRoutes: Routes = [
     MatProgressSpinnerModule,
     HttpClientModule
   ],
-  providers: [CookieService, UserService, AuthGuardService, AdminGuardService],
+  providers: [CookieService, UserService, AuthGuardService, AdminGuardService, GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

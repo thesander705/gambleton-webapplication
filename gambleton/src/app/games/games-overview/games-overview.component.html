@@ -2,8 +2,14 @@
   <button mat-fab color="primary">
     <mat-icon>add</mat-icon>
   </button>
-</a> 
+</a>
 
-<p>
-  games-overview works!
-</p>
+<mat-error class="error-notice">
+  {{errorMessage}}
+</mat-error>
+
+<div class="games-container">
+  <mat-card *ngFor="let game of games" class="game-item">
+    <mat-card-subtitle>{{game.description}}</mat-card-subtitle>
+  </mat-card>
+</div>

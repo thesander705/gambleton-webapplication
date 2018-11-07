@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../services/UserService';
+import {Game} from '../../models/Game';
+import {GameService} from '../../services/GameService';
 
 @Component({
   selector: 'app-games-overview',
@@ -8,9 +10,21 @@ import {UserService} from '../../services/UserService';
 })
 export class GamesOverviewComponent implements OnInit {
   userService: UserService;
+  gameService: GameService;
 
-  constructor(userService: UserService) {
+  games: Game[] = [];
+  errorMessage: string;
+
+
+  constructor(userService: UserService, gameService: GameService) {
+    this.gameService = gameService;
     this.userService = userService;
+
+    this.gameService.getAllGamesHeroes().subscribe((games: Game[]) => {
+      this.games = games;
+    }, () => {
+      this.errorMessage = 'Games could not be loaded.';
+    });
   }
 
   ngOnInit() {

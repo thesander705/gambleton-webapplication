@@ -1,6 +1,7 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
+import {Game} from '../models/Game';
 
 @Injectable()
 export class GameService {
@@ -8,6 +9,10 @@ export class GameService {
 
   constructor(http: HttpClient) {
     this.http = http;
+  }
+
+  getAllGamesHeroes(): Observable<Game[]> {
+    return this.http.get<Game[]>('http://localhost:8080/game');
   }
 
   public addGame(name: string, description: string): Observable<object> {

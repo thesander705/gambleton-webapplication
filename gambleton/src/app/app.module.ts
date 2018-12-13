@@ -40,11 +40,11 @@ const appRoutes: Routes = [
       {
         path: '', component: GamesOverviewComponent
       },
-      {
-        path: ':id', component: GameDetailComponent
-      },
+
       {
         path: 'add', component: CreateGameComponent, canActivate: [AdminGuardService]
+      },      {
+        path: ':id', component: GameDetailComponent
       }
     ]
   },

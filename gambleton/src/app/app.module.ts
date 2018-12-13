@@ -28,6 +28,7 @@ import {CreateGameComponent} from './games/create-game/create-game.component';
 import {GamesOverviewComponent} from './games/games-overview/games-overview.component';
 import {AdminGuardService} from './services/Guards/AdminGuardService';
 import {GameService} from './services/GameService';
+import { GameDetailComponent } from './games/game-detail/game-detail.component';
 
 
 const appRoutes: Routes = [
@@ -58,6 +59,7 @@ const appRoutes: Routes = [
     GamesComponent,
     CreateGameComponent,
     GamesOverviewComponent,
+    GameDetailComponent,
   ],
   imports: [
     BrowserModule,

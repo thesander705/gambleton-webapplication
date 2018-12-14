@@ -1,3 +1,8 @@
 <p>
   {{gameId}}
 </p>
+<ng-container *ngFor="let match of matches">
+  <p>
+    {{match.title}}
+  </p>
+</ng-container>

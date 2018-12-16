@@ -16,6 +16,11 @@ export class GameService {
     return this.http.get<Game[]>('http://localhost:8080/game');
   }
 
+  getGame(gameId: number): Observable<Game> {
+    const url: string = 'http://localhost:8080/game/' + gameId;
+    return this.http.get<Game>(url);
+  }
+
   public addGame(name: string, description: string): Observable<object> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -33,4 +38,5 @@ export class GameService {
     const url: string = 'http://localhost:8080/game/' + gameId + '/match';
     return this.http.get<Match[]>(url);
   }
+
 }

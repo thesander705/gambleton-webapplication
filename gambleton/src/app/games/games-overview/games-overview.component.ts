@@ -20,7 +20,7 @@ export class GamesOverviewComponent implements OnInit {
     this.gameService = gameService;
     this.userService = userService;
 
-    this.gameService.getAllGamesHeroes().subscribe((games: Game[]) => {
+    this.gameService.getAllGames().subscribe((games: Game[]) => {
       this.games = games;
     }, () => {
       this.errorMessage = 'Games could not be loaded.';

@@ -12,7 +12,7 @@ export class GameService {
     this.http = http;
   }
 
-  getAllGamesHeroes(): Observable<Game[]> {
+  getAllGames(): Observable<Game[]> {
     return this.http.get<Game[]>('http://localhost:8080/game');
   }
 

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {GameService} from '../../services/GameService';
 import {Match} from '../../models/Match';
+import {Game} from '../../models/Game';
 
 @Component({
   selector: 'app-game-detail',
@@ -13,6 +14,7 @@ export class GameDetailComponent implements OnInit {
   private gameService: GameService;
 
   gameId: number;
+  game: Game;
   matches: Match[];
 
 
@@ -21,6 +23,7 @@ export class GameDetailComponent implements OnInit {
     this.activatedRoute = activatedRoute;
     this.activatedRoute.params.subscribe(params => {
       this.gameId = params['gameId'];
+      this.updateGame(this.gameId);
       this.updateMatches(this.gameId);
     });
   }
@@ -29,9 +32,15 @@ export class GameDetailComponent implements OnInit {
 
   }
 
-  private updateMatches(gameId: number){
+  private updateMatches(gameId: number) {
     this.gameService.getAllMatchesByGame(this.gameId).subscribe(matches => {
       this.matches = matches;
+    });
+  }
+
+  private updateGame(gameId: number) {
+    this.gameService.getGame(this.gameId).subscribe(game => {
+      this.game = game;
     });
   }
 

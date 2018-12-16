@@ -1,8 +1,18 @@
-<p>
-  {{gameId}}
-</p>
-<ng-container *ngFor="let match of matches">
-  <p>
-    {{match.title}}
-  </p>
-</ng-container>
+<mat-card-title>
+  {{game?.name}}
+</mat-card-title>
+<br/>
+<mat-card-subtitle>
+  {{game?.description}}
+</mat-card-subtitle>
+<mat-divider></mat-divider>
+
+<h3>
+  Matches
+</h3>
+<div class="matches-container">
+  <mat-card *ngFor="let match of matches" class="match-item">
+    <mat-card-title><a class="match-title">{{match.title}}</a></mat-card-title>
+    <mat-card-subtitle>{{match.description}}</mat-card-subtitle>
+  </mat-card>
+</div>

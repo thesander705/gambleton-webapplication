@@ -30,6 +30,7 @@ import {AdminGuardService} from './services/Guards/AdminGuardService';
 import {GameService} from './services/GameService';
 import { GameDetailComponent } from './games/game-detail/game-detail.component';
 import { MatchesComponent } from './matches/matches.component';
+import { CreateMatchComponent } from './matches/create-match/create-match.component';
 
 
 const appRoutes: Routes = [
@@ -65,6 +66,7 @@ const appRoutes: Routes = [
     GamesOverviewComponent,
     GameDetailComponent,
     MatchesComponent,
+    CreateMatchComponent,
   ],
   imports: [
     BrowserModule,

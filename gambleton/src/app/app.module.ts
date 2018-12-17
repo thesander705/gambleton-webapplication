@@ -28,9 +28,9 @@ import {CreateGameComponent} from './games/create-game/create-game.component';
 import {GamesOverviewComponent} from './games/games-overview/games-overview.component';
 import {AdminGuardService} from './services/Guards/AdminGuardService';
 import {GameService} from './services/GameService';
-import { GameDetailComponent } from './games/game-detail/game-detail.component';
-import { MatchesComponent } from './matches/matches.component';
-import { CreateMatchComponent } from './matches/create-match/create-match.component';
+import {GameDetailComponent} from './games/game-detail/game-detail.component';
+import {MatchesComponent} from './matches/matches.component';
+import {CreateMatchComponent} from './matches/create-match/create-match.component';
 
 
 const appRoutes: Routes = [
@@ -45,10 +45,19 @@ const appRoutes: Routes = [
 
       {
         path: 'add', component: CreateGameComponent, canActivate: [AdminGuardService]
-      },      {
+      }, {
         path: ':gameId', component: GameDetailComponent
       }
     ]
+  },
+  {
+    path: 'matches', component: MatchesComponent,
+    children:
+      [
+        {
+          path: 'add', component: CreateMatchComponent
+        }
+      ]
   },
   {path: 'login', component: LoginComponent},
   {path: 'not-found', component: PageNotFoundComponent},

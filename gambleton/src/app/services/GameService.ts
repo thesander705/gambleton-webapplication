@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Game} from '../models/Game';
 import {Match} from '../models/Match';
+import {Competitor} from '../models/Competitor';
 
 @Injectable()
 export class GameService {
@@ -39,4 +40,8 @@ export class GameService {
     return this.http.get<Match[]>(url);
   }
 
+  getAllCompetitorsByGame(gameId: number): Observable<Competitor[]> {
+    const url: string = 'http://localhost:8080/game/' + gameId + '/competitor';
+    return this.http.get<Competitor[]>(url);
+  }
 }

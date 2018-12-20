@@ -6,6 +6,7 @@ import {Competitor} from '../../models/Competitor';
 import {BetOption} from '../../models/BetOption';
 import {MatchService} from '../../services/MatchService';
 import {Match} from '../../models/Match';
+import {CompetitorService} from '../../services/CompetitorService';
 
 
 @Component({
@@ -18,6 +19,8 @@ export class CreateMatchComponent implements OnInit {
   private activatedRoute: ActivatedRoute;
   private gameService: GameService;
   private matchService: MatchService;
+  private competitorService: CompetitorService;
+
   private router: Router;
 
   competitors: Competitor[];
@@ -33,12 +36,19 @@ export class CreateMatchComponent implements OnInit {
   matchDescription: string;
   matchBetOptions: BetOption[];
 
-  constructor(activatedRoute: ActivatedRoute, gameService: GameService, matchService: MatchService, router: Router) {
+  showNewCompetitor: boolean;
+  newCompetitorName: string;
+  newCompetitorDescription: string;
+
+
+  constructor(activatedRoute: ActivatedRoute, gameService: GameService, matchService: MatchService, competitorService: CompetitorService, router: Router) {
+    this.competitorService = competitorService;
     this.router = router;
     this.matchService = matchService;
     this.gameService = gameService;
     this.activatedRoute = activatedRoute;
     this.matchBetOptions = [];
+    this.showNewCompetitor = false;
 
     this.activatedRoute.params.subscribe(params => {
       this.gameId = params['gameId'];
@@ -60,7 +70,24 @@ export class CreateMatchComponent implements OnInit {
   private updateCompetitors(gameId: number) {
     this.gameService.getAllCompetitorsByGame(this.gameId).subscribe(competitors => {
       this.competitors = competitors;
-      this.selectableCompetitors = competitors;
+      const selectableCompetitors = competitors;
+
+      this.matchBetOptions.forEach(function (betOption) {
+        let itemRemove;
+
+        selectableCompetitors.forEach(function (competitor) {
+          if (competitor.id === betOption.competitor.id) {
+            itemRemove = competitor;
+          }
+        });
+
+        const indexFromItem: number = selectableCompetitors.indexOf(itemRemove);
+        if (indexFromItem !== -1) {
+          selectableCompetitors.splice(indexFromItem, 1);
+        }
+      });
+
+      this.selectableCompetitors = selectableCompetitors;
     });
   }
 
@@ -108,6 +135,16 @@ export class CreateMatchComponent implements OnInit {
     this.matchService.addMatch(match.title, match.description, match.game.id, match.startDate, match.endDate, match.betOptions).subscribe(() => {
       const url = '/games/' + this.gameId;
       this.router.navigate([url]);
+    });
+  }
+
+  private createCompetitor() {
+    this.competitorService.addCompetitor(this.newCompetitorName, this.newCompetitorDescription, this.gameId).subscribe(() => {
+      this.updateCompetitors(this.gameId);
+
+      this.newCompetitorName = '';
+      this.newCompetitorDescription = '';
+      this.showNewCompetitor = false;
     });
   }
 }

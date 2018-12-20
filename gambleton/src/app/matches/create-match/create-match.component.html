@@ -50,6 +50,20 @@
 
   <div class="competitors">
     <h4>All competitors from this game</h4>
+    <a (click)="showNewCompetitor = true" *ngIf="!showNewCompetitor">Add competitor</a>
+    <a (click)="showNewCompetitor = false" *ngIf="showNewCompetitor">close add competitor</a>
+
+    <div class="add-competitor" *ngIf="showNewCompetitor">
+      <h4>Add competitor</h4>
+      <mat-form-field>
+        <input [(ngModel)]="newCompetitorName" matInput placeholder="Competitor title" name="competitor-name">
+      </mat-form-field>
+      <mat-form-field>
+        <textarea [(ngModel)]="newCompetitorDescription" matInput placeholder="Competitor description" name="competitor-description"></textarea>
+      </mat-form-field>
+      <button mat-stroked-button (click)="createCompetitor()">Add competitor</button>
+    </div>
+
     <ul class="competitor-list">
       <li *ngFor="let competitor of selectableCompetitors" class="competitor">
         <span>
@@ -62,4 +76,4 @@
     </ul>
   </div>
 </div>
-<button mat-button (click)="submit()">Submit</button>
+<button mat-stroked-button  (click)="submit()">Create match!</button>

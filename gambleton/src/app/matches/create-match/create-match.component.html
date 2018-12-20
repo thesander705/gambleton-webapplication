@@ -1,27 +1,37 @@
 <h3>Add match to {{game?.name}}</h3>
-<form>
+<div class="row">
   <div class="match-settings">
-    <mat-form-field>
-      <input [(ngModel)]="matchTitle" matInput placeholder="Match title" name="match-title">
-    </mat-form-field>
-    <div class="date-time-group">
+    <form>
+      <h4>Match information</h4>
       <mat-form-field>
-        <input [(ngModel)]="matchStartDate" matInput placeholder="Star date" type="date" name="match-start-date"/>
+        <input [(ngModel)]="matchTitle" matInput placeholder="Match title" name="match-title">
       </mat-form-field>
+      <div class="date-time-group">
+        <mat-form-field>
+          <input [(ngModel)]="matchStartDate" matInput placeholder="Star date" type="date" name="match-start-date"/>
+        </mat-form-field>
+        <mat-form-field>
+          <input [(ngModel)]="matchStartTime" placeholder="Start time" type="time" matInput name="match-start-time"/>
+        </mat-form-field>
+      </div>
+      <div class="date-time-group">
+        <mat-form-field>
+          <input [(ngModel)]="matchEndDate" matInput placeholder="End date" type="date" name="match-end-date"/>
+        </mat-form-field>
+        <mat-form-field>
+          <input [(ngModel)]="matchEndTime" placeholder="End time" type="time" matInput name="match-end-time"/>
+        </mat-form-field>
+      </div>
       <mat-form-field>
-        <input [(ngModel)]="matchStartTime" placeholder="Start time" type="time" matInput name="match-start-time"/>
+        <textarea [(ngModel)]="matchDescription" matInput placeholder="Description" name="match-description"></textarea>
       </mat-form-field>
-    </div>
-    <div class="date-time-group">
-      <mat-form-field>
-        <input [(ngModel)]="matchEndDate" matInput placeholder="End date" type="date" name="match-end-date"/>
-      </mat-form-field>
-      <mat-form-field>
-        <input [(ngModel)]="matchEndTime" placeholder="End time" type="time" matInput name="match-end-time"/>
-      </mat-form-field>
-    </div>
-    <mat-form-field>
-      <textarea [(ngModel)]="matchDescription" matInput placeholder="Description" name="match-description"></textarea>
-    </mat-form-field>
+    </form>
   </div>
-</form>
+
+  <div class="competitors">
+    <h4>All competitors from this game</h4>
+    <div *ngFor="let competitor of competitors">
+      {{competitor.name}} <br>
+    </div>
+  </div>
+</div>

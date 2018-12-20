@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {GameService} from '../../services/GameService';
 import {Game} from '../../models/Game';
 import {Competitor} from '../../models/Competitor';
 import {BetOption} from '../../models/BetOption';
+import {MatchService} from '../../services/MatchService';
+import {Match} from '../../models/Match';
+
 
 @Component({
   selector: 'app-create-match',
@@ -14,6 +17,8 @@ export class CreateMatchComponent implements OnInit {
 
   private activatedRoute: ActivatedRoute;
   private gameService: GameService;
+  private matchService: MatchService;
+  private router: Router;
 
   competitors: Competitor[];
   selectableCompetitors: Competitor[];
@@ -21,14 +26,16 @@ export class CreateMatchComponent implements OnInit {
   gameId: number;
   game: Game;
   matchTitle: string;
-  matchStartDate: Date;
+  matchStartDate: string;
   matchStartTime: string;
-  matchEndDate: Date;
+  matchEndDate: string;
   matchEndTime: string;
   matchDescription: string;
   matchBetOptions: BetOption[];
 
-  constructor(activatedRoute: ActivatedRoute, gameService: GameService) {
+  constructor(activatedRoute: ActivatedRoute, gameService: GameService, matchService: MatchService, router: Router) {
+    this.router = router;
+    this.matchService = matchService;
     this.gameService = gameService;
     this.activatedRoute = activatedRoute;
     this.matchBetOptions = [];
@@ -66,7 +73,6 @@ export class CreateMatchComponent implements OnInit {
     const betOption: BetOption = new BetOption();
     betOption.competitor = competitor;
     betOption.payoutRate = 1;
-
     this.matchBetOptions.push(betOption);
   }
 
@@ -77,5 +83,31 @@ export class CreateMatchComponent implements OnInit {
     }
 
     this.selectableCompetitors.push(betOption.competitor);
+  }
+
+  private submit() {
+    const match: Match = this.generateMatch();
+    this.saveMatch(match);
+  }
+
+  private generateMatch(): Match {
+    const match = new Match();
+
+    match.title = this.matchTitle;
+    match.description = this.matchDescription;
+    match.game = this.game;
+    match.startDate = new Date(this.matchStartDate + ' ' + this.matchStartTime);
+    match.endDate = new Date(this.matchEndDate + ' ' + this.matchEndTime);
+    match.betOptions = this.matchBetOptions;
+
+    console.log(match);
+    return match;
+  }
+
+  private saveMatch(match: Match) {
+    this.matchService.addMatch(match.title, match.description, match.game.id, match.startDate, match.endDate, match.betOptions).subscribe(() => {
+      const url = '/games/' + this.gameId;
+      this.router.navigate([url]);
+    });
   }
 }

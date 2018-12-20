@@ -32,6 +32,8 @@ import {GameDetailComponent} from './games/game-detail/game-detail.component';
 import {MatchesComponent} from './matches/matches.component';
 import {CreateMatchComponent} from './matches/create-match/create-match.component';
 import {AmazingTimePickerModule} from 'amazing-time-picker';
+import {MatchService} from './services/MatchService';
+import { CompetitorsComponent } from './competitors/competitors.component';
 
 
 const appRoutes: Routes = [
@@ -71,6 +73,7 @@ const appRoutes: Routes = [
     GameDetailComponent,
     MatchesComponent,
     CreateMatchComponent,
+    CompetitorsComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,7 +99,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     AmazingTimePickerModule
   ],
-  providers: [CookieService, UserService, AuthGuardService, AdminGuardService, GameService],
+  providers: [CookieService, UserService, AuthGuardService, AdminGuardService, GameService, MatchService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

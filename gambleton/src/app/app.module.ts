@@ -14,7 +14,7 @@ import {
   MatToolbarModule,
   MatSidenavModule,
   MatListModule, MatTabsModule,
-  MatFormFieldModule, MatOptionModule, MatSelectModule, MatInputModule, MatProgressSpinnerModule
+  MatFormFieldModule, MatOptionModule, MatSelectModule, MatInputModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule
 } from '@angular/material';
 import {LayoutModule} from '@angular/cdk/layout';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
@@ -28,6 +28,12 @@ import {CreateGameComponent} from './games/create-game/create-game.component';
 import {GamesOverviewComponent} from './games/games-overview/games-overview.component';
 import {AdminGuardService} from './services/Guards/AdminGuardService';
 import {GameService} from './services/GameService';
+import {GameDetailComponent} from './games/game-detail/game-detail.component';
+import {MatchesComponent} from './matches/matches.component';
+import {CreateMatchComponent} from './matches/create-match/create-match.component';
+import {AmazingTimePickerModule} from 'amazing-time-picker';
+import {MatchService} from './services/MatchService';
+import {CompetitorService} from './services/CompetitorService';
 
 
 const appRoutes: Routes = [
@@ -39,8 +45,14 @@ const appRoutes: Routes = [
       {
         path: '', component: GamesOverviewComponent
       },
+
       {
         path: 'add', component: CreateGameComponent, canActivate: [AdminGuardService]
+      }, {
+        path: ':gameId', component: GameDetailComponent
+      },
+      {
+        path: ':gameId/matches/add', component: CreateMatchComponent// , canActivate: [AdminGuardService]
       }
     ]
   },
@@ -58,6 +70,9 @@ const appRoutes: Routes = [
     GamesComponent,
     CreateGameComponent,
     GamesOverviewComponent,
+    GameDetailComponent,
+    MatchesComponent,
+    CreateMatchComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,9 +93,12 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    HttpClientModule
+    MatDatepickerModule,
+    MatNativeDateModule,
+    HttpClientModule,
+    AmazingTimePickerModule
   ],
-  providers: [CookieService, UserService, AuthGuardService, AdminGuardService, GameService],
+  providers: [CookieService, UserService, AuthGuardService, AdminGuardService, GameService, MatchService, CompetitorService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

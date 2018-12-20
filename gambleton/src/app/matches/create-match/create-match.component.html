@@ -1,0 +1,79 @@
+<h3>Add match to {{game?.name}}</h3>
+<div class="row">
+  <div class="match-settings">
+    <form>
+      <h4>Match information</h4>
+      <mat-form-field>
+        <input [(ngModel)]="matchTitle" matInput placeholder="Match title" name="match-title">
+      </mat-form-field>
+      <div class="date-time-group">
+        <mat-form-field>
+          <input [(ngModel)]="matchStartDate" matInput placeholder="Star date" type="date" name="match-start-date"/>
+        </mat-form-field>
+        <mat-form-field>
+          <input [(ngModel)]="matchStartTime" placeholder="Start time" type="time" matInput name="match-start-time"/>
+        </mat-form-field>
+      </div>
+      <div class="date-time-group">
+        <mat-form-field>
+          <input [(ngModel)]="matchEndDate" matInput placeholder="End date" type="date" name="match-end-date"/>
+        </mat-form-field>
+        <mat-form-field>
+          <input [(ngModel)]="matchEndTime" placeholder="End time" type="time" matInput name="match-end-time"/>
+        </mat-form-field>
+      </div>
+      <mat-form-field>
+        <textarea [(ngModel)]="matchDescription" matInput placeholder="Description" name="match-description"></textarea>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div class="bet-options">
+    <h4>Bet options</h4>
+    <table class="bet-options-table">
+      <thead>
+      <tr>
+        <th>Competitor name</th>
+        <th>Payout rate</th>
+        <th>Bet option options</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let betOption of matchBetOptions">
+        <td>{{betOption.competitor.name}}</td>
+        <td><input placeholder="Payout rate" type="number" matInput [(ngModel)]="betOption.payoutRate"></td>
+        <td><a (click)="removeBetOptionFromBetOptions(betOption)">Remove bet option</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="competitors">
+    <h4>All competitors from this game</h4>
+    <a (click)="showNewCompetitor = true" *ngIf="!showNewCompetitor">Add competitor</a>
+    <a (click)="showNewCompetitor = false" *ngIf="showNewCompetitor">close add competitor</a>
+
+    <div class="add-competitor" *ngIf="showNewCompetitor">
+      <h4>Add competitor</h4>
+      <mat-form-field>
+        <input [(ngModel)]="newCompetitorName" matInput placeholder="Competitor title" name="competitor-name">
+      </mat-form-field>
+      <mat-form-field>
+        <textarea [(ngModel)]="newCompetitorDescription" matInput placeholder="Competitor description" name="competitor-description"></textarea>
+      </mat-form-field>
+      <button mat-stroked-button (click)="createCompetitor()">Add competitor</button>
+    </div>
+
+    <ul class="competitor-list">
+      <li *ngFor="let competitor of selectableCompetitors" class="competitor">
+        <span>
+          {{competitor.name}}
+        </span>
+        <span>
+          <a (click)="addCompetitorToBetOptions(competitor)">Add to bet options</a>
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>
+<button mat-stroked-button  (click)="submit()">Create match!</button>

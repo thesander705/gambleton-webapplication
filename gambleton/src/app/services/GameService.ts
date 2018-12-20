@@ -2,6 +2,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Game} from '../models/Game';
+import {Match} from '../models/Match';
+import {Competitor} from '../models/Competitor';
 
 @Injectable()
 export class GameService {
@@ -11,8 +13,13 @@ export class GameService {
     this.http = http;
   }
 
-  getAllGamesHeroes(): Observable<Game[]> {
+  getAllGames(): Observable<Game[]> {
     return this.http.get<Game[]>('http://localhost:8080/game');
+  }
+
+  getGame(gameId: number): Observable<Game> {
+    const url: string = 'http://localhost:8080/game/' + gameId;
+    return this.http.get<Game>(url);
   }
 
   public addGame(name: string, description: string): Observable<object> {
@@ -26,5 +33,15 @@ export class GameService {
       name: name,
       description: description
     }, httpOptions);
+  }
+
+  getAllMatchesByGame(gameId: number): Observable<Match[]> {
+    const url: string = 'http://localhost:8080/game/' + gameId + '/match';
+    return this.http.get<Match[]>(url);
+  }
+
+  getAllCompetitorsByGame(gameId: number): Observable<Competitor[]> {
+    const url: string = 'http://localhost:8080/game/' + gameId + '/competitor';
+    return this.http.get<Competitor[]>(url);
   }
 }

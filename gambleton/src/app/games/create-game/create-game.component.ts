@@ -11,7 +11,7 @@ export class CreateGameComponent implements OnInit {
 
   private gameService: GameService;
   private router: Router;
-  private route: ActivatedRoute;
+  private readonly route: ActivatedRoute;
 
   name: string;
   description: string;
@@ -28,7 +28,7 @@ export class CreateGameComponent implements OnInit {
   ngOnInit() {
   }
 
-  private onSubmit(): void {
+  onSubmit(): void {
     this.gameService.addGame(this.name, this.description).subscribe(() => {
         this.router.navigate(['../'], {relativeTo: this.route});
       },

@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {GameService} from '../../services/GameService';
 import {Match} from '../../models/Match';
 import {Game} from '../../models/Game';
+import {UserService} from '../../services/UserService';
 
 @Component({
   selector: 'app-game-detail',
@@ -13,14 +14,16 @@ export class GameDetailComponent implements OnInit {
   private activatedRoute: ActivatedRoute;
   private gameService: GameService;
 
+  userService: UserService;
   gameId: number;
   game: Game;
   matches: Match[];
 
 
-  constructor(activatedRoute: ActivatedRoute, gameService: GameService) {
+  constructor(activatedRoute: ActivatedRoute, gameService: GameService, userService: UserService) {
     this.gameService = gameService;
     this.activatedRoute = activatedRoute;
+    this.userService = userService;
     this.activatedRoute.params.subscribe(params => {
       this.gameId = params['gameId'];
       this.updateGame(this.gameId);

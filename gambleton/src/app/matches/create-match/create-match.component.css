@@ -1,0 +1,21 @@
+mat-form-field{
+  width: 100%;
+}
+
+.match-settings{
+  width: 25%;
+}
+
+.date-time-group{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.date-time-group > mat-form-field{
+  width: 48%;
+}
+
+textarea{
+  min-height: 100px;
+}

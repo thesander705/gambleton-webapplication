@@ -14,7 +14,7 @@ import {
   MatToolbarModule,
   MatSidenavModule,
   MatListModule, MatTabsModule,
-  MatFormFieldModule, MatOptionModule, MatSelectModule, MatInputModule, MatProgressSpinnerModule
+  MatFormFieldModule, MatOptionModule, MatSelectModule, MatInputModule, MatProgressSpinnerModule, MatDatepickerModule, MatNativeDateModule
 } from '@angular/material';
 import {LayoutModule} from '@angular/cdk/layout';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
@@ -31,6 +31,7 @@ import {GameService} from './services/GameService';
 import {GameDetailComponent} from './games/game-detail/game-detail.component';
 import {MatchesComponent} from './matches/matches.component';
 import {CreateMatchComponent} from './matches/create-match/create-match.component';
+import {AmazingTimePickerModule} from 'amazing-time-picker';
 
 
 const appRoutes: Routes = [
@@ -49,7 +50,7 @@ const appRoutes: Routes = [
         path: ':gameId', component: GameDetailComponent
       },
       {
-        path: ':gameId/matches/add', component: CreateMatchComponent
+        path: ':gameId/matches/add', component: CreateMatchComponent// , canActivate: [AdminGuardService]
       }
     ]
   },
@@ -90,7 +91,10 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    HttpClientModule
+    MatDatepickerModule,
+    MatNativeDateModule,
+    HttpClientModule,
+    AmazingTimePickerModule
   ],
   providers: [CookieService, UserService, AuthGuardService, AdminGuardService, GameService],
   bootstrap: [AppComponent]

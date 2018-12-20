@@ -1,30 +1,65 @@
-mat-form-field{
+mat-form-field {
   width: 100%;
 }
 
-.match-settings{
+.match-settings {
   width: 25%;
 }
 
-.date-time-group{
+.date-time-group {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-.date-time-group > mat-form-field{
+.date-time-group > mat-form-field {
   width: 48%;
 }
 
-textarea{
+textarea {
   min-height: 100px;
 }
 
-.row{
+.row {
   display: flex;
   justify-content: space-between;
 }
 
-.competitors{
+.competitors {
   width: 25%;
+}
+
+.bet-options {
+  width: 25%;
+}
+
+li {
+  list-style-type: none;
+  margin-bottom: 15px;
+}
+
+.competitor {
+  display: flex;
+  justify-content: space-between;
+}
+
+.competitor-list {
+  padding-left: 0;
+}
+
+a:hover{
+  color: #c2185b;
+}
+a{
+  cursor: pointer;
+  -webkit-transition: color 0.2s;
+  -moz-transition: color 0.2s;
+  -ms-transition: color 0.2s;
+  -o-transition: color 0.2s;
+  transition: color 0.2s;
+}
+
+.bet-options-table{
+  width: 100%;
+  text-align: left;
 }

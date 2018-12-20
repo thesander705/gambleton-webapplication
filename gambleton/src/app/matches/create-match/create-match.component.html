@@ -28,10 +28,37 @@
     </form>
   </div>
 
+  <div class="bet-options">
+    <h4>Bet options</h4>
+    <table class="bet-options-table">
+      <thead>
+      <tr>
+        <th>Competitor name</th>
+        <th>Payout rate</th>
+        <th>Bet option options</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let betOption of matchBetOptions">
+        <td>{{betOption.competitor.name}}</td>
+        <td><input placeholder="Payout rate" type="number" matInput [(ngModel)]="betOption.payoutRate"></td>
+        <td><a (click)="removeBetOptionFromBetOptions(betOption)">Remove bet option</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
   <div class="competitors">
     <h4>All competitors from this game</h4>
-    <div *ngFor="let competitor of competitors">
-      {{competitor.name}} <br>
-    </div>
+    <ul class="competitor-list">
+      <li *ngFor="let competitor of selectableCompetitors" class="competitor">
+        <span>
+          {{competitor.name}}
+        </span>
+        <span>
+          <a (click)="addCompetitorToBetOptions(competitor)">Add to bet options</a>
+        </span>
+      </li>
+    </ul>
   </div>
 </div>

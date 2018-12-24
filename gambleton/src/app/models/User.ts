@@ -7,6 +7,7 @@ export class User {
   private _password: string;
   private _role: Role;
   private _authToken: string;
+  private _money: number;
 
   get id(): number {
     return this._id;
@@ -46,5 +47,13 @@ export class User {
 
   set authToken(value: string) {
     this._authToken = value;
+  }
+
+  get money(): number {
+    return this._money;
+  }
+
+  set money(value: number) {
+    this._money = value;
   }
 }

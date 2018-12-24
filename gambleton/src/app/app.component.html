@@ -11,7 +11,7 @@
             <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
             <li><a routerLink="/games" routerLinkActive="active">Games</a></li>
             <li *ngIf="userService.loggedInUser == null"><a routerLink="/login" routerLinkActive="active">Login</a></li>
-            <li *ngIf="userService.loggedInUser != null"><a routerLink="/account" routerLinkActive="active">{{userService.loggedInUser.username}}</a></li>
+            <li *ngIf="userService.loggedInUser != null"><a routerLink="/account" routerLinkActive="active">{{userService.loggedInUser.username}} ({{userService.loggedInUser.money | currency:'EUR':'symbol':'2.2-2'}})</a></li>
           </ul>
         </div>
       </mat-toolbar>

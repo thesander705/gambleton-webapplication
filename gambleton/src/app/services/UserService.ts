@@ -87,59 +87,27 @@ export class UserService {
   }
 
   public GetUserByCredentials(username: string, password: string): Observable<User> {
-    const observableUser: Observable<User> = Observable.create((observer: Observer<User>) => {
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
         })
       };
 
-      this.http.post('http://localhost:8080/userByCredentials', {
+      return this.http.post<User>('http://localhost:8080/userByCredentials', {
         username: username,
         password: password
-      }, httpOptions)
-        .subscribe(data => {
-            const user: User = new User();
-            user.username = data['username'];
-            user.password = data['password'];
-            user.id = data['id'];
-            user.role = data['role'];
-            user.authToken = data['authToken'];
-            observer.next(user);
-          },
-          error => {
-            observer.error('User not found');
-          });
-    });
-
-    return observableUser;
+      }, httpOptions);
   }
 
   public GetUserByAuthenticationToken(authToken: string): Observable<User> {
-    const observableUser: Observable<User> = Observable.create((observer: Observer<User>) => {
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
         })
       };
 
-      this.http.post('http://localhost:8080/userByAuthToken', {
+      return this.http.post<User>('http://localhost:8080/userByAuthToken', {
         authToken: authToken
-      }, httpOptions)
-        .subscribe(data => {
-            const user: User = new User();
-            user.username = data['username'];
-            user.password = data['password'];
-            user.id = data['id'];
-            user.role = data['role'];
-            user.authToken = data['authToken'];
-            observer.next(user);
-          },
-          () => {
-            observer.error('User not found');
-          });
-    });
-
-    return observableUser;
+      }, httpOptions);
   }
 }

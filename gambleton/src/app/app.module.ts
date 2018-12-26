@@ -34,6 +34,7 @@ import {CreateMatchComponent} from './matches/create-match/create-match.componen
 import {AmazingTimePickerModule} from 'amazing-time-picker';
 import {MatchService} from './services/MatchService';
 import {CompetitorService} from './services/CompetitorService';
+import { MatchDetailComponent } from './matches/match-detail/match-detail.component';
 
 
 const appRoutes: Routes = [
@@ -73,6 +74,7 @@ const appRoutes: Routes = [
     GameDetailComponent,
     MatchesComponent,
     CreateMatchComponent,
+    MatchDetailComponent,
   ],
   imports: [
     BrowserModule,

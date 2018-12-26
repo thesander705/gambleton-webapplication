@@ -34,6 +34,7 @@ import {CreateMatchComponent} from './matches/create-match/create-match.componen
 import {AmazingTimePickerModule} from 'amazing-time-picker';
 import {MatchService} from './services/MatchService';
 import {CompetitorService} from './services/CompetitorService';
+import { MatchDetailComponent } from './matches/match-detail/match-detail.component';
 
 
 const appRoutes: Routes = [
@@ -52,7 +53,15 @@ const appRoutes: Routes = [
         path: ':gameId', component: GameDetailComponent
       },
       {
-        path: ':gameId/matches/add', component: CreateMatchComponent// , canActivate: [AdminGuardService]
+        path: ':gameId/matches/add', component: CreateMatchComponent, canActivate: [AdminGuardService]
+      }
+    ]
+  },
+  {
+    path: 'matches', component: MatchesComponent,
+    children: [
+      {
+        path: ':matchId', component: MatchDetailComponent
       }
     ]
   },
@@ -73,6 +82,7 @@ const appRoutes: Routes = [
     GameDetailComponent,
     MatchesComponent,
     CreateMatchComponent,
+    MatchDetailComponent,
   ],
   imports: [
     BrowserModule,

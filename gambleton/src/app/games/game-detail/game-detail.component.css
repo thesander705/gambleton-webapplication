@@ -4,3 +4,17 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 15px;
 }
+
+a{
+  color: #FFFFFF;
+  text-decoration: none;
+  -webkit-transition: color 0.2s;
+  -moz-transition: color 0.2s;
+  -ms-transition: color 0.2s;
+  -o-transition: color 0.2s;
+  transition: color 0.2s;
+}
+
+a:hover{
+  color: #c2185b;
+}

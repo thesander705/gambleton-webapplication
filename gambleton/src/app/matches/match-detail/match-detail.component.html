@@ -1,0 +1,15 @@
+<h1>{{match?.title}}</h1>
+<ul class="information">
+  <li>Starts: {{match?.startDate | date:'longDate'}} at {{match?.startDate | date:'shortTime'}}</li>
+  <li>ends: {{match?.endDate | date:'longDate'}} at {{match?.endDate | date:'shortTime'}}</li>
+</ul>
+<p>{{match?.description}}</p>
+<mat-divider></mat-divider>
+
+<h2>Bet options</h2>
+<div class="bet-option-container">
+  <mat-card *ngFor="let betOption of match?.betOptions" class="match-item">
+    <mat-card-title><a class="match-title">{{betOption.competitor.name}}</a></mat-card-title> 
+    <mat-card-subtitle>Payout rate: {{betOption.payoutRate}}x</mat-card-subtitle>
+  </mat-card>
+</div>

@@ -18,7 +18,7 @@
 
 <div class="matches-container">
   <mat-card *ngFor="let match of matches" class="match-item">
-    <mat-card-title><a class="match-title">{{match.title}}</a></mat-card-title>
+    <mat-card-title><a class="match-title" routerLink="/matches/{{match.id}}">{{match.title}}</a></mat-card-title>
     <mat-card-subtitle>{{match.description}}</mat-card-subtitle>
   </mat-card>
 </div>

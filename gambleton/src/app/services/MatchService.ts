@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {BetOption} from '../models/BetOption';
+import {Game} from '../models/Game';
+import {Match} from '../models/Match';
 
 @Injectable()
 export class MatchService {
@@ -40,5 +42,10 @@ export class MatchService {
       endDate: endDate,
       betOptions: betOptionsViewModel
     }, httpOptions);
+  }
+
+  getMatch(matchId: number): Observable<Match> {
+    const url: string = 'http://localhost:8080/match/' + matchId;
+    return this.http.get<Match>(url);
   }
 }

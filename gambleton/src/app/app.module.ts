@@ -53,7 +53,15 @@ const appRoutes: Routes = [
         path: ':gameId', component: GameDetailComponent
       },
       {
-        path: ':gameId/matches/add', component: CreateMatchComponent// , canActivate: [AdminGuardService]
+        path: ':gameId/matches/add', component: CreateMatchComponent, canActivate: [AdminGuardService]
+      }
+    ]
+  },
+  {
+    path: 'matches', component: MatchesComponent,
+    children: [
+      {
+        path: ':matchId', component: MatchDetailComponent
       }
     ]
   },

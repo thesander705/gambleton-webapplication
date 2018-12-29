@@ -4,6 +4,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {Observable, Observer} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Role} from '../models/Role';
+import {BetOption} from '../models/BetOption';
 
 @Injectable()
 export class UserService {
@@ -87,27 +88,41 @@ export class UserService {
   }
 
   public GetUserByCredentials(username: string, password: string): Observable<User> {
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        })
-      };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
 
-      return this.http.post<User>('http://localhost:8080/userByCredentials', {
-        username: username,
-        password: password
-      }, httpOptions);
+    return this.http.post<User>('http://localhost:8080/userByCredentials', {
+      username: username,
+      password: password
+    }, httpOptions);
   }
 
   public GetUserByAuthenticationToken(authToken: string): Observable<User> {
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        })
-      };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
 
-      return this.http.post<User>('http://localhost:8080/userByAuthToken', {
-        authToken: authToken
-      }, httpOptions);
+    return this.http.post<User>('http://localhost:8080/userByAuthToken', {
+      authToken: authToken
+    }, httpOptions);
+  }
+
+  public PlaceBet(userPlacingBet: User, betOption: BetOption, moneyPlaced: number): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+
+    return this.http.post('http://localhost:8080/bets', {
+      amountOfMoney: moneyPlaced,
+      betOptionId: betOption.id,
+      userPlacingBetId: userPlacingBet.id
+    }, httpOptions);
   }
 }

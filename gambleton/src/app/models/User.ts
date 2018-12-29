@@ -1,4 +1,5 @@
 import {Role} from './Role';
+import {Bet} from './Bet';
 
 export class User {
 
@@ -8,6 +9,7 @@ export class User {
   private _role: Role;
   private _authToken: string;
   private _money: number;
+  private _bets: Bet[];
 
   get id(): number {
     return this._id;
@@ -55,5 +57,13 @@ export class User {
 
   set money(value: number) {
     this._money = value;
+  }
+
+  get bets(): Bet[] {
+    return this._bets;
+  }
+
+  set bets(value: Bet[]) {
+    this._bets = value;
   }
 }

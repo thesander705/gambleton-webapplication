@@ -1,3 +1,7 @@
+<div class="page-blocker" *ngIf="showPageBlocker">
+  <h1>Placing bet!</h1>
+  <mat-spinner></mat-spinner>
+</div>
 <h1>{{match?.title}}</h1>
 <ul class="information">
   <li>Starts: {{match?.startDate | date:'longDate'}} at {{match?.startDate | date:'shortTime'}}</li>
@@ -9,7 +13,20 @@
 <h2>Bet options</h2>
 <div class="bet-option-container">
   <mat-card *ngFor="let betOption of match?.betOptions" class="match-item">
-    <mat-card-title><a class="match-title">{{betOption.competitor.name}}</a></mat-card-title> 
+    <mat-card-title><a class="match-title">{{betOption.competitor.name}}</a></mat-card-title>
     <mat-card-subtitle>Payout rate: {{betOption.payoutRate}}x</mat-card-subtitle>
+
+    <ng-container *ngIf="!getPlacedBetOfCurrentMatch()">
+      <form (ngSubmit)="placeBet(betOption, +moneyToBet.value)">
+        <label>
+          Money to bet: €<input placeholder="money to place" matInput type="number" class="money-to-place" #moneyToBet max="{{user?.money}}"/>
+        </label>
+        <button mat-stroked-button>Place bet</button>
+      </form>
+    </ng-container>
+
+    <label *ngIf="getPlacedBetOfCurrentMatch()?.betOption.id == betOption.id">
+      Amount of money you have bet: {{getPlacedBetOfCurrentMatch().moneyPlaced | currency:'EUR':'symbol':'.2-2'}}
+    </label>
   </mat-card>
 </div>

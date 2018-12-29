@@ -13,3 +13,18 @@ li{
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 15px;
 }
+
+
+.page-blocker{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  background: rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+mat-spinner{
+  margin-left: auto;
+  margin-right: auto;
+}

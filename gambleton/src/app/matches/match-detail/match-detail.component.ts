@@ -6,6 +6,7 @@ import {BetOption} from '../../models/BetOption';
 import {UserService} from '../../services/UserService';
 import {Bet} from '../../models/Bet';
 import {User} from '../../models/User';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-match-detail',
@@ -18,6 +19,7 @@ export class MatchDetailComponent implements OnInit {
   private activatedRoute: ActivatedRoute;
   private userService: UserService;
   private placedBet: Bet;
+  private userUpdatedSubject: Subject<boolean>;
 
   match: Match;
   matchId: number;
@@ -30,6 +32,7 @@ export class MatchDetailComponent implements OnInit {
     this.matchService = matchService;
     this.activatedRoute = activatedRoute;
     this.showPageBlocker = false;
+    this.userUpdatedSubject = this.userService.userUpdated;
 
     this.activatedRoute.params.subscribe(params => {
       this.matchId = params['matchId'];
@@ -37,6 +40,10 @@ export class MatchDetailComponent implements OnInit {
     });
 
     this.user = userService.loggedInUser;
+
+    this.userUpdatedSubject.subscribe(() => {
+      this.updateView();
+    });
 
   }
 
@@ -51,16 +58,7 @@ export class MatchDetailComponent implements OnInit {
 
   private placeBet(betOption: BetOption, amountOfMoney: number) {
     this.showPageBlocker = true;
-    this.userService.PlaceBet(this.userService.loggedInUser, betOption, amountOfMoney).subscribe(() => {
-      this.userService.restoreLoggedInUser().subscribe();
-      this.updateMatch(this.matchId);
-      this.placedBet = undefined;
-      this.getPlacedBetOfCurrentMatch();
-    }, () => {
-      alert('Something went wrong!');
-    }, () => {
-      this.showPageBlocker = false;
-    });
+    this.userService.PlaceBet(this.userService.loggedInUser, betOption, amountOfMoney);
   }
 
   getPlacedBetOfCurrentMatch(): Bet {
@@ -70,6 +68,10 @@ export class MatchDetailComponent implements OnInit {
 
     if (this.placedBet) {
       return this.placedBet;
+    }
+
+    if (!user) {
+      return null;
     }
 
     user.bets.forEach(bet => {
@@ -82,5 +84,13 @@ export class MatchDetailComponent implements OnInit {
 
     this.placedBet = placedBet;
     return placedBet;
+  }
+
+  private updateView() {
+    this.userService.restoreLoggedInUser().subscribe();
+    this.updateMatch(this.matchId);
+    this.placedBet = undefined;
+    this.getPlacedBetOfCurrentMatch();
+    this.showPageBlocker = false;
   }
 }

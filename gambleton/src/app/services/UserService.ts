@@ -1,7 +1,7 @@
 import {User} from '../models/User';
 import {Injectable} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {Observable, Observer} from 'rxjs';
+import {Observable, Observer, Subject} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Role} from '../models/Role';
 import {BetOption} from '../models/BetOption';
@@ -17,11 +17,14 @@ export class UserService {
   private _loggedInUser: User;
   private socket: socketIo;
 
+  public userUpdated: Subject<boolean>;
 
   constructor(cookieService: CookieService, http: HttpClient) {
     this.cookieService = cookieService;
     this.http = http;
     this.socket = socketIo(SERVER_URL);
+    this.userUpdated = new Subject();
+    this.setupWebsocketListeners();
   }
 
   get loggedInUser(): User {
@@ -107,27 +110,30 @@ export class UserService {
 
 
   public GetUserByAuthenticationToken(authToken: string): Observable<User> {
-    this.socket.emit('post-userByAuthToken', {authToken: authToken});
-
-    return new Observable<User>(observer => {
-      this.socket.on('post-userByAuthToken', function (data: any) {
-        return observer.next(data);
-      });
-    });
-  }
-
-
-  public PlaceBet(userPlacingBet: User, betOption: BetOption, moneyPlaced: number): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       })
     };
 
-    return this.http.post('http://localhost:8080/bets', {
+    return this.http.post<User>('http://localhost:8080/userByAuthToken', {
+      authToken: authToken
+    }, httpOptions);  }
+
+
+  public PlaceBet(userPlacingBet: User, betOption: BetOption, moneyPlaced: number): void {
+    this.socket.emit('post-bets', {
       amountOfMoney: moneyPlaced,
       betOptionId: betOption.id,
       userPlacingBetId: userPlacingBet.id
-    }, httpOptions);
+    });
+  }
+
+  private setupWebsocketListeners(): void {
+    const userUpdatedSubject: Subject<boolean> = this.userUpdated;
+
+    this.socket.on('post-bets', function (data: any) {
+      userUpdatedSubject.next(true);
+    });
   }
 }

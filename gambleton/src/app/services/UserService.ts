@@ -5,6 +5,9 @@ import {Observable, Observer} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Role} from '../models/Role';
 import {BetOption} from '../models/BetOption';
+import * as socketIo from 'socket.io-client';
+
+const SERVER_URL = 'http://localhost:3000';
 
 @Injectable()
 export class UserService {
@@ -12,11 +15,13 @@ export class UserService {
   private cookieService: CookieService;
   private http: HttpClient;
   private _loggedInUser: User;
+  private socket: socketIo;
 
 
   constructor(cookieService: CookieService, http: HttpClient) {
     this.cookieService = cookieService;
     this.http = http;
+    this.socket = socketIo(SERVER_URL);
   }
 
   get loggedInUser(): User {
@@ -100,17 +105,17 @@ export class UserService {
     }, httpOptions);
   }
 
-  public GetUserByAuthenticationToken(authToken: string): Observable<User> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    };
 
-    return this.http.post<User>('http://localhost:8080/userByAuthToken', {
-      authToken: authToken
-    }, httpOptions);
+  public GetUserByAuthenticationToken(authToken: string): Observable<User> {
+    this.socket.emit('post-userByAuthToken', {authToken: authToken});
+
+    return new Observable<User>(observer => {
+      this.socket.on('post-userByAuthToken', function (data: any) {
+        return observer.next(data);
+      });
+    });
   }
+
 
   public PlaceBet(userPlacingBet: User, betOption: BetOption, moneyPlaced: number): Observable<any> {
     const httpOptions = {

@@ -57,7 +57,7 @@ export class MatchDetailComponent implements OnInit {
 
   private placeBet(betOption: BetOption, amountOfMoney: number) {
     this.showPageBlocker = true;
-    this.userService.PlaceBet(this.userService.loggedInUser, betOption, amountOfMoney);
+    this.userService.PlaceBet(this.userService.loggedInUser, betOption, amountOfMoney, this.userService.loggedInUser.authToken);
   }
 
   getPlacedBetOfCurrentMatch(): Bet {

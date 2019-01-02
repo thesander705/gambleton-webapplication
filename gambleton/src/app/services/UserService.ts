@@ -121,11 +121,12 @@ export class UserService {
     }, httpOptions);  }
 
 
-  public PlaceBet(userPlacingBet: User, betOption: BetOption, moneyPlaced: number): void {
+  public PlaceBet(userPlacingBet: User, betOption: BetOption, moneyPlaced: number, authToken: string): void {
     this.socket.emit('post-bets', {
       amountOfMoney: moneyPlaced,
       betOptionId: betOption.id,
-      userPlacingBetId: userPlacingBet.id
+      userPlacingBetId: userPlacingBet.id,
+      authToken: authToken
     });
   }
 

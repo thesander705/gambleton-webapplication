@@ -29,11 +29,7 @@ export class CreateGameComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.gameService.addGame(this.name, this.description).subscribe(() => {
-        this.router.navigate(['../'], {relativeTo: this.route});
-      },
-      () => {
-        this.errorMessage = 'Lesson could not be created!';
-      });
+    this.gameService.addGame(this.name, this.description);
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 }

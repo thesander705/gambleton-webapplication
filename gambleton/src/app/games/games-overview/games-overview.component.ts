@@ -19,15 +19,20 @@ export class GamesOverviewComponent implements OnInit {
   constructor(userService: UserService, gameService: GameService) {
     this.gameService = gameService;
     this.userService = userService;
-
-    this.gameService.getAllGames().subscribe((games: Game[]) => {
-      this.games = games;
-    }, () => {
-      this.errorMessage = 'Games could not be loaded.';
+    this.loadView();
+    this.gameService.gamesUpdated.subscribe(() => {
+      this.loadView();
     });
   }
 
   ngOnInit() {
   }
 
+  private loadView() {
+    this.gameService.getAllGames().subscribe((games: Game[]) => {
+      this.games = games;
+    }, () => {
+      this.errorMessage = 'Games could not be loaded.';
+    });
+  }
 }

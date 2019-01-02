@@ -44,7 +44,6 @@ export class MatchDetailComponent implements OnInit {
     this.userUpdatedSubject.subscribe(() => {
       this.updateView();
     });
-
   }
 
   ngOnInit() {

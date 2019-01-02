@@ -132,10 +132,8 @@ export class CreateMatchComponent implements OnInit {
   }
 
   private saveMatch(match: Match) {
-    this.matchService.addMatch(match.title, match.description, match.game.id, match.startDate, match.endDate, match.betOptions).subscribe(() => {
-      const url = '/games/' + this.gameId;
-      this.router.navigate([url]);
-    });
+    this.matchService.addMatch(match.title, match.description, match.game.id, match.startDate, match.endDate, match.betOptions);
+    this.finishedPosingGame();
   }
 
   private createCompetitor() {
@@ -146,5 +144,10 @@ export class CreateMatchComponent implements OnInit {
       this.newCompetitorDescription = '';
       this.showNewCompetitor = false;
     });
+  }
+
+  private finishedPosingGame() {
+    const url = '/games/' + this.gameId;
+    this.router.navigate([url]);
   }
 }

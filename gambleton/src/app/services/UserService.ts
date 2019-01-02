@@ -1,10 +1,13 @@
 import {User} from '../models/User';
 import {Injectable} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {Observable, Observer} from 'rxjs';
+import {Observable, Observer, Subject} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Role} from '../models/Role';
 import {BetOption} from '../models/BetOption';
+import * as socketIo from 'socket.io-client';
+
+const SERVER_URL = 'http://localhost:3000';
 
 @Injectable()
 export class UserService {
@@ -12,11 +15,16 @@ export class UserService {
   private cookieService: CookieService;
   private http: HttpClient;
   private _loggedInUser: User;
+  private socket: socketIo;
 
+  public userUpdated: Subject<boolean>;
 
   constructor(cookieService: CookieService, http: HttpClient) {
     this.cookieService = cookieService;
     this.http = http;
+    this.socket = socketIo(SERVER_URL);
+    this.userUpdated = new Subject();
+    this.setupWebsocketListeners();
   }
 
   get loggedInUser(): User {
@@ -100,6 +108,7 @@ export class UserService {
     }, httpOptions);
   }
 
+
   public GetUserByAuthenticationToken(authToken: string): Observable<User> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -109,20 +118,22 @@ export class UserService {
 
     return this.http.post<User>('http://localhost:8080/userByAuthToken', {
       authToken: authToken
-    }, httpOptions);
-  }
+    }, httpOptions);  }
 
-  public PlaceBet(userPlacingBet: User, betOption: BetOption, moneyPlaced: number): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    };
 
-    return this.http.post('http://localhost:8080/bets', {
+  public PlaceBet(userPlacingBet: User, betOption: BetOption, moneyPlaced: number): void {
+    this.socket.emit('post-bets', {
       amountOfMoney: moneyPlaced,
       betOptionId: betOption.id,
       userPlacingBetId: userPlacingBet.id
-    }, httpOptions);
+    });
+  }
+
+  private setupWebsocketListeners(): void {
+    const userUpdatedSubject: Subject<boolean> = this.userUpdated;
+
+    this.socket.on('post-bets', function (data: any) {
+      userUpdatedSubject.next(true);
+    });
   }
 }

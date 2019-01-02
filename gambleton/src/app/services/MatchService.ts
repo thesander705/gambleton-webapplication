@@ -27,7 +27,8 @@ export class MatchService {
                   gameId: number,
                   startDate: Date,
                   endDate: Date,
-                  betOptions: BetOption[]): void {
+                  betOptions: BetOption[],
+                  authToken: string): void {
 
 
     const betOptionsViewModel: Object[] = [];
@@ -45,7 +46,8 @@ export class MatchService {
       gameId: gameId,
       startDate: startDate,
       endDate: endDate,
-      betOptions: betOptionsViewModel
+      betOptions: betOptionsViewModel,
+      authToken: authToken
     });
   }
 

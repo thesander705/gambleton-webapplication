@@ -10,7 +10,7 @@ export class CompetitorService {
     this.http = http;
   }
 
-  public addCompetitor(name: string, description: string, gameId: number): Observable<object> {
+  public addCompetitor(name: string, description: string, gameId: number, authToken: string): Observable<object> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -20,7 +20,8 @@ export class CompetitorService {
     return this.http.post('http://localhost:8080/competitor', {
       name: name,
       description: description,
-      gameId: gameId
+      gameId: gameId,
+      authToken: authToken
     }, httpOptions);
   }
 }

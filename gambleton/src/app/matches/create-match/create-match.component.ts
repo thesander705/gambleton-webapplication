@@ -7,6 +7,7 @@ import {BetOption} from '../../models/BetOption';
 import {MatchService} from '../../services/MatchService';
 import {Match} from '../../models/Match';
 import {CompetitorService} from '../../services/CompetitorService';
+import {UserService} from '../../services/UserService';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class CreateMatchComponent implements OnInit {
   private gameService: GameService;
   private matchService: MatchService;
   private competitorService: CompetitorService;
-
+  private userService: UserService;
   private router: Router;
 
   competitors: Competitor[];
@@ -41,7 +42,8 @@ export class CreateMatchComponent implements OnInit {
   newCompetitorDescription: string;
 
 
-  constructor(activatedRoute: ActivatedRoute, gameService: GameService, matchService: MatchService, competitorService: CompetitorService, router: Router) {
+  constructor(activatedRoute: ActivatedRoute, gameService: GameService, matchService: MatchService, competitorService: CompetitorService, router: Router, userService: UserService) {
+    this.userService = userService;
     this.competitorService = competitorService;
     this.router = router;
     this.matchService = matchService;
@@ -132,12 +134,12 @@ export class CreateMatchComponent implements OnInit {
   }
 
   private saveMatch(match: Match) {
-    this.matchService.addMatch(match.title, match.description, match.game.id, match.startDate, match.endDate, match.betOptions);
+    this.matchService.addMatch(match.title, match.description, match.game.id, match.startDate, match.endDate, match.betOptions, this.userService.loggedInUser.authToken);
     this.finishedPosingGame();
   }
 
   private createCompetitor() {
-    this.competitorService.addCompetitor(this.newCompetitorName, this.newCompetitorDescription, this.gameId).subscribe(() => {
+    this.competitorService.addCompetitor(this.newCompetitorName, this.newCompetitorDescription, this.gameId, this.userService.loggedInUser.authToken).subscribe(() => {
       this.updateCompetitors(this.gameId);
 
       this.newCompetitorName = '';

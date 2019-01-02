@@ -31,10 +31,11 @@ export class GameService {
     return this.http.get<Game>(url);
   }
 
-  public addGame(name: string, description: string) {
+  public addGame(name: string, description: string, authToken: string) {
     this.socket.emit('post-game', {
       name: name,
-      description: description
+      description: description,
+      authToken: authToken
     });
   }
 
